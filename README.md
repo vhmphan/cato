@@ -47,8 +47,8 @@ ax.set_xscale('log')
 ax.set_yscale('log')
 ax.set_xlabel(r'$E_\gamma {\rm (GeV)}$',fontsize=fs)
 ax.set_ylabel(r'$E_\gamma \phi(E_\gamma) {\rm (GeV\,s^{-1}\,sr^{-1})}$',fontsize=fs)
-for label_axd in (ax.get_xticklabels() + ax.get_yticklabels()):
-    label_axd.set_fontsize(fs)
+for label_ax in (ax.get_xticklabels() + ax.get_yticklabels()):
+    label_ax.set_fontsize(fs)
 ax.set_xlim(1.0e-1,1.0e6)
 ax.set_ylim(1.0e-30,1.0e-26)
 ax.legend(loc='upper right', prop={"size":fs})
