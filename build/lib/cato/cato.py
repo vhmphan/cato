@@ -159,7 +159,6 @@ def func_df_dw(w):
 # Auxiliary function for electron ionization differential cross-section 
 def func_D(t):
 
-	c_df, d_df, e_df, f_df 
 	c_df=1.1262 
 	d_df=6.382 
 	e_df=-7.8055 
