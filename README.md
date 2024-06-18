@@ -53,3 +53,5 @@ ax.grid(linestyle='--')
 
 plt.savefig("fg_LocISM_emissivity.png")
 ```
+
+**References**: Ionization cross-sections are from [Padovani et al. 2009](https://ui.adsabs.harvard.edu/abs/2009A%26A...501..619P/abstract) and [Krause et al. 2015](https://ui.adsabs.harvard.edu/abs/2015ICRC...34..518K/abstract). Gamma-ray cross-sections are from [Kafexhiu et al. 2014](https://ui.adsabs.harvard.edu/abs/2014PhRvD..90l3014K/abstract).
