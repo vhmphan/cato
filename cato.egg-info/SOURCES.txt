@@ -1,0 +1,10 @@
+MANIFEST.in
+README.md
+setup.py
+cato/__init__.py
+cato/cato.py
+cato.egg-info/PKG-INFO
+cato.egg-info/SOURCES.txt
+cato.egg-info/dependency_links.txt
+cato.egg-info/requires.txt
+cato.egg-info/top_level.txt
