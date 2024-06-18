@@ -8,10 +8,10 @@ setup(
         'numpy',
         'scipy'
     ],
-    description='A package containing a function to calculate electron capture cross-section',
-    author='Your Name',
-    author_email='your.email@example.com',
-    url='https://github.com/yourusername/mypackage',
+    description='A package containing a function to cosmic-ray ionization cross-section',
+    author='Vo Hong Minh Phan',
+    author_email='vhmphan@obspm.fr',
+    url='https://github.com/vhmphan/cato',
     classifiers=[
         'Programming Language :: Python :: 3',
         'License :: OSI Approved :: MIT License',
