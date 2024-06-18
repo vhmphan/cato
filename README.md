@@ -35,6 +35,9 @@ phi_LOC=np.zeros_like(Eg)
 for i in range(len(Eg)):
     phi_LOC[i]=trapezoid(eps_nucl*ct.func_jLocISM_p(Tp)*d_sigma_g[:,i],Tp) # eV^-1 s^-1
 
+fs=22 # Fontsize for plot
+
+# Plot gamma-ray emissivity
 fig=plt.figure(figsize=(10, 8))
 ax=plt.subplot(111)
 
@@ -48,7 +51,7 @@ for label_axd in (ax.get_xticklabels() + ax.get_yticklabels()):
     label_axd.set_fontsize(fs)
 ax.set_xlim(1.0e-1,1.0e6)
 ax.set_ylim(1.0e-30,1.0e-26)
-ax.legend(loc='upper right', prop={"size":22})
+ax.legend(loc='upper right', prop={"size":fs})
 ax.grid(linestyle='--')
 
 plt.savefig("fg_LocISM_emissivity.png")
