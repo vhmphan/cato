@@ -246,6 +246,7 @@ def func_sigma_e(Ee_p):
 def load_data_file(filename):
     data_path=pkg_resources.resource_filename(__name__, f'data/{filename}')
     data=np.loadtxt(data_path)
+    
     return data
  
 
