@@ -63,14 +63,13 @@ ax.plot(E_data_p,phi_data_p,'r-',linewidth=3,label=r'${\rm Proton}$')
 ax.plot(E_data_e,phi_data_e,'g-.',linewidth=3,label=r'${\rm Electron}$')
 
 ax.set_xscale('log')
-ax.set_yscale('log')
 ax.legend()
 ax.set_xlabel(r'$E {\rm (eV)}$',fontsize=fs)
 ax.set_ylabel(r'$\sigma {\rm (10^{-17}\,cm^{2})}$',fontsize=fs)
 for label_axd in (ax.get_xticklabels() + ax.get_yticklabels()):
     label_axd.set_fontsize(fs)
-ax.set_xlim(1.0e1,1.0e11)
-ax.set_ylim(1.0e-3,2.0e2)
+ax.set_xlim(1.0e2,1.0e11)
+ax.set_ylim(0.0,1.2)
 ax.legend(loc='upper right', prop={"size":22})
 ax.grid(linestyle='--')
 
