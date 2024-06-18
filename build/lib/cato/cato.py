@@ -15,17 +15,11 @@ Sp=4.0*np.pi*pow(a0,2)*N*pow(RH/IH2,2)
 lambda_pe=(2.0*mp+2.0*me)/me 
 Se=4.0*np.pi*pow(a0,2)*N*pow(alpha_f,4) 
 
-# The intensity of CR electrons fitted with Voyager and AMS data
-def func_sptr_p_Voyager(E): # Voyager fit
 
-    C=1.882e-9 
-    alpha=0.129056 
-    beta=2.82891 
-    E0=624.5e6 
-    
-    f0=C*pow(E/1.0e6,alpha)*pow(1.0+(E/E0),-beta) 
-    
-    return f0 # eV^-1 cm^-2 s^-1 sr^-1
+####################################################################################################################################
+# Proton ionization cross-sections
+####################################################################################################################################
+
 
 # Electron capture cross-section
 def func_sigma_ec(Ep_p):
@@ -42,7 +36,8 @@ def func_sigma_ec(Ep_p):
     
     return sigma_ec # cm^2
 
-# Auxiliary functions for proton ionization differential cross-section and cross-section
+
+# Auxiliary functions for proton ionization differential cross-section 
 def func_F1(v):
 
 	A1=0.8 
@@ -57,6 +52,8 @@ def func_F1(v):
 	F1=L1+H1 
 	return F1 
 
+
+# Auxiliary function for proton ionization differential cross-section 
 def func_F2(v):
 	
 	A2=1.06 
@@ -69,6 +66,7 @@ def func_F2(v):
 
 	F2=L2*H2/(L2+H2) 	
 	return F2 
+
 
 # Differential cross-section of Rudd model
 def func_d_sigma_p_E(Ep_p, Ee_s):
@@ -84,6 +82,7 @@ def func_d_sigma_p_E(Ep_p, Ee_s):
 	d_sigma_E=(Sp/IH2)*(func_F1(v)+func_F2(v)*w)*pow(1.0+w,-3)/(1.0+np.exp(alpha*(w-wc)/v)) 
 
 	return d_sigma_E 
+
 
 # # Proton ionization cross-section
 # def func_sigma_p(Ep_p):# Proton ionization cross-section
@@ -118,6 +117,7 @@ def func_d_sigma_p_E(Ep_p, Ee_s):
 # 	return sigma_p 
 #
 
+
 # Proton ionization cross-section
 def func_sigma_p(Ep_p): 
 
@@ -137,7 +137,13 @@ def func_sigma_p(Ep_p):
 
     return sigma_p # cm^2
 
-# Electron ionization differential cross-section and cross-section
+
+####################################################################################################################################
+# Electron ionization cross-section
+####################################################################################################################################
+
+
+# Auxiliary function for electron ionization differential cross-section 
 def func_df_dw(w):
 
 	c_df, d_df, e_df, f_df 
@@ -149,6 +155,8 @@ def func_df_dw(w):
 	df_dw=(c_df/pow(1.0+w,3))+(d_df/pow(1.0+w,4))+(e_df/pow(1.0+w,5))+(f_df/pow(1.0+w,6)) 
 	return df_dw 
 
+
+# Auxiliary function for electron ionization differential cross-section 
 def func_D(t):
 
 	c_df, d_df, e_df, f_df 
@@ -167,16 +175,16 @@ def func_D(t):
 
 	return D 
 
+
+# Auxiliary function for electron ionization differential cross-section 
 def func_d_sigma_e_E(Ee_p, Ee_s):# Differential cross-section of electron (RBEB binary-encounter-Bethe)
 
-	c_df, d_df, e_df, f_df, N_i 
 	c_df=1.1262 
 	d_df=6.382 
 	e_df=-7.8055 
 	f_df=2.144 
 	N_i=(c_df/2.0)+(d_df/2.0)+(e_df/2.0)+(f_df/2.0) 	
 
-	U_H2, B_H2,  u_primed, b_primed, beta_u, beta_b 	
 	U_H2=39.603 # Average kinetic energy of orbital electron
 	B_H2=IH2 # Binding energy
 	u_primed=U_H2/me 
@@ -184,14 +192,12 @@ def func_d_sigma_e_E(Ee_p, Ee_s):# Differential cross-section of electron (RBEB 
 	beta_u=np.sqrt(1.0-(1.0/pow(1.0+u_primed,2))) 
 	beta_b=np.sqrt(1.0-(1.0/pow(1.0+b_primed,2))) 
 
-	d_sigma_E, t, t_primed, w, beta_t 
 	t=Ee_p/IH2 
 	t_primed=Ee_p/me 
 	beta_t=np.sqrt(1.0-(1.0/pow(1.0+t_primed,2))) 	
 	w=Ee_s/IH2 
 
 	d_sigma_E=0.0 	
-
 	d_sigma_E+=(((N_i/N)-2)/(t+1.0))*((1.0/(1+w))+(1.0/(t-w)))*((1.0+2.0*t_primed)/(pow(1.0+(t_primed/2.0),2))) 
 	d_sigma_E+=(2.0-(N_i/N))*((1.0/pow(1.0+w,2))+(1.0/pow(t-w,2))+(pow(b_primed,2)/pow(1.0+(t_primed/2.0),2))) 
 	d_sigma_E+=(1.0/(N*(1.0+w)))*func_df_dw(w)*(np.log(pow(beta_t,2)/(1.0-pow(beta_t,2)))) 
@@ -201,16 +207,16 @@ def func_d_sigma_e_E(Ee_p, Ee_s):# Differential cross-section of electron (RBEB 
 
 	return d_sigma_E 
 
+
+# Electron ionization cross-section
 def func_sigma_e(Ee_p):
 
-	c_df, d_df, e_df, f_df, N_i 
 	c_df=1.1262 
 	d_df=6.382 
 	e_df=-7.8055 
 	f_df=2.144 
 	N_i=(c_df/2.0)+(d_df/2.0)+(e_df/2.0)+(f_df/2.0) 
 
-	U_H2, B_H2,  u_primed, b_primed, beta_u, beta_b 	
 	U_H2=39.603 # Average kinetic energy of orbital electron
 	B_H2=IH2 # Binding energy
 	u_primed=U_H2/me 
@@ -218,13 +224,11 @@ def func_sigma_e(Ee_p):
 	beta_u=np.sqrt(1.0-(1.0/pow(1.0+u_primed,2))) 
 	beta_b=np.sqrt(1.0-(1.0/pow(1.0+b_primed,2))) 	
 
-	sigma_e, t, t_primed, beta_t 
 	t=Ee_p/IH2 
 	t_primed=Ee_p/me 
 	beta_t=np.sqrt(1.0-(1.0/pow(1.0+t_primed,2))) 	
 
 	sigma_e=0.0 
-
 	sigma_e+=func_D(t)*(np.log(pow(beta_t,2)/(1.0-pow(beta_t,2)))-pow(beta_t,2)-np.log(2.0*b_primed)) 
 	sigma_e+=(2.0-(N_i/N))*(1.0-(1.0/t)-(np.log(t)/(t+1))*((1.0+2.0*t_primed)/pow(1.0+(t_primed/2.0),2))) 
 	sigma_e+=(2.0-(N_i/N))*((pow(b_primed,2)/pow(1.0+(t_primed/2.0),2))*((t-1.0)/2.0)) 
@@ -233,15 +237,9 @@ def func_sigma_e(Ee_p):
 	return sigma_e 
 
 
-# Function for interpolation
-def log_interp1d(xx, yy, kind='linear'):
-
-    logx=np.log10(xx)
-    logy=np.log10(yy)
-    lin_interp=sp.interpolate.interp1d(logx,logy,kind=kind)
-    log_interp=lambda zz: np.power(10.0,lin_interp(np.log10(zz)))
-
-    return log_interp
+####################################################################################################################################
+# Cosmic-ray spectra in the local ISM
+####################################################################################################################################
 
 
 # Fit of the Voyager spectrum for protons 
@@ -255,4 +253,349 @@ def func_jLocISM_p(E):
     f0=12.5e-10*pow(E/1.0e6,0.35)/((1.0+pow(E/80.0e6,1.3))*pow(1.0+pow(E/2.2e9,1.9/2.1),2.1)) 
 
     return f0 # eV^-1 cm^-2 s^-1 sr^-1
+
+
+# Fit of the Voyager spectrum for protons 
+def func_jLocISM_e(E):
+    
+    C=4.658e-7 
+    alpha=-1.236 
+    beta=2.033 
+    E0=736.2e6
+    
+    f0=C*(E/1.0e6)**alpha*(1.0+(E/E0))**(-beta)
+
+    return f0 # eV^-1 cm^-2 s^-1 sr^-1
+
+
+####################################################################################################################################
+# Function for interpolation on log-log scale
+####################################################################################################################################
+
+# Function for interpolation
+def log_interp1d(xx, yy, kind='linear'):
+
+    logx=np.log10(xx)
+    logy=np.log10(yy)
+    lin_interp=sp.interpolate.interp1d(logx,logy,kind=kind)
+    log_interp=lambda zz: np.power(10.0,lin_interp(np.log10(zz)))
+
+    return log_interp
+
+
+meCGS=9.10938356e-28 # g
+mpCGS=1.67262192e-24 # g
+qeCGS=4.8032e-10 # CGS unit -> Electric charge of proton
+
+kB=8.617333262145e-5 # eV/K
+sigmaT=6.6524e-25 # cm^-2 -> Thompson cross-section
+sigma_sb=3.5394474508e7 # erg cm^-2 s^-1 K^-4
+hP=4.1357e-15 # eV s
+Ktomec2=1.6863699549e-10 # -> To convert temperture T from K/kB to eV/me 
+
+mpi=134.9766e6 # eV
+Tpth=2.0*mpi+(pow(mpi,2)/(2.0*mp)) # eV
+
+
+############################################################################################
+# Gamma rays from proton-proton interaction -> Kafexhiu et al. 2014
+############################################################################################
+
+
+# Dimensionless Breit-Wigner distribution.
+def func_fBW(sqrt_s):
+# Eq. 4.
+
+    M_res=1.1883*pow(10.0,9) # eV
+    Gamma_res=0.2264*pow(10.0,9) # eV
+    gamma=np.sqrt(pow(M_res,2)*(pow(M_res,2)+pow(Gamma_res,2))) 
+    K=np.sqrt(8.0)*M_res*Gamma_res*gamma/(np.pi*np.sqrt(pow(M_res,2)+gamma)) 
+    
+    fBW=mp*K/(pow(pow(sqrt_s-mp,2)-pow(M_res,2),2)+pow(M_res*Gamma_res,2)) 
+    
+    return fBW
+
+
+# Cross-section for p+p -> p+p+pi0.
+def func_sigma_1pi(Tp):
+# Eq. 2,
+# Tp (eV) -> kinetic energy of CR proton.
+
+    sigma_0=7.66e-3 
+    sqrt_s=np.sqrt(2.0*mp*(Tp+2.0*mp)) 
+    eta=np.sqrt(pow(pow(sqrt_s,2)-pow(mpi,2)-4.0*pow(mp,2),2)-16.0*pow(mpi*mp,2))/(2.0*mpi*sqrt_s) 
+    
+    sigma_1pi=sigma_0*pow(eta,1.95)*(1.0+eta+pow(eta,5))*pow(func_fBW(sqrt_s),1.86) 
+    
+    return sigma_1pi # m
+
+
+# Cross-section for p+p -> p+p+2pi0.
+def func_sigma_2pi(Tp):
+# Eq. 5,
+# Tp (eV) -> kinetic energy of CR proton.
+       
+    mask1=(Tp<0.56e9)
+    mask2=(Tp>=0.56e9)
+
+    sigma_2pi=np.zeros_like(Tp)
+
+    sigma_2pi[mask1]=0.0 
+    sigma_2pi[mask2]=5.7/(1.0+np.exp(-9.3*(Tp[mask2]*1.0e-9-1.4))) 
+    
+    return sigma_2pi # m
+
+
+# Proton-proton total inelastic cross-section. 
+def func_sigma_inel(Tp):
+# Eq. 1,
+# Tp (eV) -> kinetic energy of CR proton.
+
+    sigma_inel=30.7-0.96*np.log(Tp/Tpth)+0.18*pow(np.log(Tp/Tpth),2) 
+    sigma_inel*=pow(1.0-pow(Tpth/Tp,1.9),3) 
+    sigma_inel[sigma_inel<0.0]=0.0
+    
+    return sigma_inel # m
+
+
+# Average pi0 multiplicity.
+def func_npi(Tp):
+# Eq. 7 and Table 4 (GEANT 4 model),
+# Tp (eV) -> kinetic energy of CR proton.
+
+    a1=0.728 
+    a2=0.596 
+    a3=0.491 
+    a4=0.2503 
+    a5=0.117 
+    
+    Qp=(Tp-Tpth)/mp 
+    xip=(Tp-3.0e9)/mp 
+
+    mask1=(Tp>=1.0e9) & (Tp<5.0e9)
+    mask2=(Tp>=5.0e9)
+
+    npi=np.zeros_like(Tp)
+
+    npi[mask1]=-6.0e-3+0.237*Qp[mask1]-0.023*pow(Qp[mask1],2) 
+    npi[mask2]=a1*pow(xip[mask2],a4)*(1.0+np.exp(-a2*pow(xip[mask2],a5)))*(1.0-np.exp(-a3*pow(xip[mask2],0.25))) 
+    
+    return npi
+
+
+# Pi0 production cross-section.
+def func_sigma_pi(Tp):
+# See paragraph above Table 4,
+# Tp (eV) -> kinetic energy of CR proton.
+    
+    mask1=(Tp>=Tpth) & (Tp<2.0e9)
+    mask2=(Tp>=2.0e9)
+
+    sigma_pi=np.zeros_like(Tp)
+
+    sigma_pi[mask1]=func_sigma_1pi(Tp[mask1])+func_sigma_2pi(Tp[mask1]) 
+    sigma_pi[mask2]=func_sigma_inel(Tp[mask2])*func_npi(Tp[mask2]) 
+    
+    return sigma_pi # m
+
+
+# Complementary function for the differential cross-section.
+def func_Amax(Tp):
+# Eq. 12 and Table 7 (GEANT 4 model),
+# Tp (eV) -> kinetic energy of CR proton.
+
+    sqrt_s=np.sqrt(2.0*mp*(Tp+2.0*mp)) 
+    gamma_CM=(Tp+2.0*mp)/sqrt_s 
+    beta_CM=np.sqrt(1.0-pow(gamma_CM,-2)) 
+    Epi_CM=(pow(sqrt_s,2)-4.0*pow(mp,2)+pow(mpi,2))/(2.0*sqrt_s) 
+    Ppi_CM=np.sqrt(pow(Epi_CM,2)-pow(mpi,2)) 
+    Epi_max=gamma_CM*(Epi_CM+Ppi_CM*beta_CM) 
+    Epi_min=gamma_CM*(Epi_CM-Ppi_CM*beta_CM) 
+    theta_p=Tp/mp 
+
+    mask1=(Tp<Tpth)
+    mask2=(Tp>=Tpth) & (Tp<1.0e9)
+    mask3=(Tp>=1.0e9) & (Tp<5.0e9)
+    mask4=(Tp>=5.0e9)
+
+    Amax=np.zeros_like(Tp)
+
+    Amax[mask1]=0.0 
+    Amax[mask2]=5.9*func_sigma_pi(Tp[mask2])/Epi_max[mask2] 
+    Amax[mask3]=9.53*pow(theta_p[mask3],-0.52)*np.exp(0.054*pow(np.log(theta_p[mask3]),2))*func_sigma_pi(Tp[mask3])/mp 
+    Amax[mask4]=9.13*pow(theta_p[mask4],-0.35)*np.exp(9.7e-3*pow(np.log(theta_p[mask4]),2))*func_sigma_pi(Tp[mask4])/mp 
+    
+    return Amax # mb/e
+
+
+# Complementary function for the differential cross-section.
+def func_alpha(Tp):
+# Table 5, Eq. 14, and Eq. 15,
+# Tp (eV) -> kinetic energy of CR proton.
+
+    mask1=(Tp>=Tpth) & (Tp<=20.0e9)
+    mask2=(Tp>20.0e9)
+
+    alpha=np.zeros_like(Tp)
+
+    alpha[mask1]=1.0
+    alpha[mask2]=0.5
+
+    return alpha
+
+
+# Complementary function for the differential cross-section.
+def func_beta(Tp):
+# Table 5, Eq. 14, and Eq. 15,
+# Tp (eV) -> kinetic energy of CR proton.
+
+    q=(Tp-1.0e9)/mp 
+    mu=1.25*pow(q,1.25)*np.exp(-1.25*q) 
+    theta_p=Tp/mp 
+    
+    mask1=(Tp>=Tpth) & (Tp<=1.0e9)
+    mask2=(Tp>1.0e9) & (Tp<=4.0e9)
+    mask3=(Tp>4.0e9) & (Tp<=20.0e9)
+    mask4=(Tp>20.0e9) & (Tp<=100.0e9)
+    mask5=(Tp>100.0e9)
+
+    beta=np.zeros_like(Tp)
+
+    beta[mask1]=3.29-0.2*pow(theta_p[mask1],-1.5) 
+    beta[mask2]=mu[mask2]+2.45 
+    beta[mask3]=1.5*mu[mask3]+4.95 
+    beta[mask4]=4.2 
+    beta[mask5]=4.9 
+    
+    return beta
+
+# Complementary function for the differential cross-section.
+def func_gamma(Tp):
+# Table 5, Eq. 14, and Eq. 15,
+# Tp (eV) -> kinetic energy of CR proton.
+    
+    q=(Tp-1.0e9)/mp 
+    mu=1.25*pow(q,1.25)*np.exp(-1.25*q) 
+    
+    mask1=(Tp>=Tpth) & (Tp<1.0e9)
+    mask2=(Tp>=1.0e9) & (Tp<=4.0e9)
+    mask3=(Tp>4.0e9) & (Tp<=20.0e9)
+    mask4=(Tp>20.0e9)
+
+    gamma=np.zeros_like(Tp)
+
+    gamma[mask1]=0.0 
+    gamma[mask2]=mu[mask2]+1.45 
+    gamma[mask3]=mu[mask3]+1.5 
+    gamma[mask4]=1.0 
+
+    return gamma
+
+
+# Complementary function for the differential cross-section.
+def func_F(Tp, Eg):
+# Eq. 11 and Table 5,    
+# Tp (eV) -> kinetic energy of CR proton,
+# Eg (eV) -> energy of gamma ray.
+
+    Tp, Eg=np.meshgrid(Tp, Eg, indexing='ij')
+
+    sqrt_s=np.sqrt(2.0*mp*(Tp+2.0*mp)) 
+    gamma_CM=(Tp+2.0*mp)/sqrt_s 
+    beta_CM=np.sqrt(1.0-pow(gamma_CM,-2)) 
+    Epi_CM=(pow(sqrt_s,2)-4.0*pow(mp,2)+pow(mpi,2))/(2.0*sqrt_s) 
+    Ppi_CM=np.sqrt(pow(Epi_CM,2)-pow(mpi,2)) 
+    
+    Epi_max_LAB=gamma_CM*(Epi_CM+Ppi_CM*beta_CM) 
+    gammapi_LAB=Epi_max_LAB/mpi 
+    betapi_LAB=np.sqrt(1.0-pow(gammapi_LAB,-2)) 
+    Eg_max=mpi*gammapi_LAB*(1.0+betapi_LAB)/2.0 
+    Eg_min=mpi*gammapi_LAB*(1.0-betapi_LAB)/2.0 
+    
+    mask=(Eg>=Eg_min) & (Eg<=Eg_max)
+        
+    Yg=Eg+pow(mpi,2)/(4.0*Eg) 
+    Yg_max=Eg_max+pow(mpi,2)/(4.0*Eg_max) # Yg_max=mpi*gammapi_LAB
+    Xg=(Yg-mpi)/(Yg_max-mpi) 
+    C=3.0*mpi/Yg_max 
+
+    F=np.where(mask, pow(1.0-pow(Xg,func_alpha(Tp)),func_beta(Tp))/pow(1.0+Xg/C,func_gamma(Tp)), 0)
+    
+    return F
+
+
+# Complementary function for the nuclear enhancement factor.
+def func_GTp(Tp):
+# Eq. 19,
+# Tp (eV) -> kinetic energy of CR proton.
+
+    GTp=1.0+np.log(np.maximum(1.0,func_sigma_inel(Tp)/func_sigma_inel(1.0e12*Tp**0))) 
+    
+    return GTp
+
+
+# Nuclear enhancement factor. 
+def func_enhancement(Tp):
+# Eq. 24,
+# Tp (eV) -> kinetic energy of CR proton.
+
+    eps_nucl=np.zeros_like(Tp)
+
+    mask1=(Tp>=Tpth) & (Tp<1.0e9)
+    mask2=(Tp>=1.0e9)
+
+    eps_nucl[mask1]=1.7
+    eps_nucl[mask2]=1.37+0.39*10.0*np.pi*func_GTp(Tp[mask2])/func_sigma_inel(Tp[mask2]) 
+
+    return eps_nucl
+
+
+# Differential cross-section of gamma-ray from pi0 decay.
+def func_d_sigma_g(Tp, Eg):
+# Eq. 8,  
+# Tp (eV) -> kinetic energy of CR proton,
+# Eg (eV) -> energy of gamma ray.
+
+    Amax=np.zeros_like(Tp)
+
+    mask=(Tp>=Tpth)
+
+    Amax[mask]=func_Amax(Tp[mask])
+    d_sigma_g=Amax[:,np.newaxis]*func_F(Tp,Eg)*1.0e-27
+
+    return d_sigma_g # cm^2/eV
+
+
+###################################################################################################
+# Gamma absorption
+###################################################################################################
+
+
+# Cross section for gamma gamma interaction
+def func_sigma_gg(Eg, Ebg):
+
+    Eg, Ebg=np.meshgrid(Eg, Ebg, indexing='ij')
+
+    s0=Eg*Ebg/(me*me) 
+    sigma_gg=np.zeros_like(Eg) 
+
+    mask=(s0>=1.0)
+    
+    sigma_gg[mask]=(s0[mask]+0.5*np.log(s0[mask])-(1.0/6.0)+(1.0/(2.0*s0[mask])))*np.log(np.sqrt(s0[mask])+np.sqrt(s0[mask]-1.0)) 
+    sigma_gg[mask]+=-(s0[mask]+(4.0/9.0)-(1.0/(9.0*s0[mask])))*np.sqrt(1.0-(1.0/s0[mask])) 
+    sigma_gg[mask]*=1.5*sigmaT/(s0[mask]*s0[mask]) 
+    
+    return sigma_gg # cm^2
+
+
+# Photon density of the background photons from IR thermal dust emissions 
+def func_fEtd(Urad, Trad, sigma, Ebg):
+
+    zeta=sp.special.zeta(4.0+sigma) 
+
+    fEtd=Urad/(pow(Trad,2)*sp.special.gamma(4.0+sigma)*zeta*(np.exp(Ebg/Trad)-1.0)) 
+    fEtd*=pow(Ebg/Trad,2.0+sigma)
+
+    return fEtd # eV^-1 cm^-3
+
 
