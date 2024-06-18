@@ -3,9 +3,8 @@
 A package containing a function for ionization cross-sections.
 
 **Installation**: You can install this package as follows
-    ```
-    pip3 install git+https://github.com/vhmphan/cato.git
-    ```
+```sh
+pip3 install git+https://github.com/vhmphan/cato.git
 
 **Installation**: You can also upgrade this package as follows
     ```
