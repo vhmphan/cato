@@ -18,8 +18,7 @@ A package containing a function for ionization cross-sections.
     from scipy.integrate import trapezoid
     import matplotlib.pyplot as plt
     import cato.cato as ct
-    ```
-    ```
+    
     # Testing electron capture cross-section
     Ep_p = 1000 # eV 
     sigma_ec_value = ct.func_sigma_ec(Ep_p) # cm^2
