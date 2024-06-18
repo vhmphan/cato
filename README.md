@@ -55,4 +55,3 @@ A package containing a function for ionization cross-sections.
 
     plt.savefig("fg_LocISM_emissivity.png")
     ```
-    ```
