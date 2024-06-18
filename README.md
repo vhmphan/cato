@@ -19,17 +19,68 @@ from scipy.integrate import trapezoid
 import matplotlib.pyplot as plt
 import cato.cato as ct
 
-# Testing electron capture cross-section
-Ep_p = 1000 # eV 
-sigma_ec_value = ct.func_sigma_ec(Ep_p) # cm^2
 
-print(f"The electron capture cross-section for Ep_p = {Ep_p} eV is {sigma_ec_value} cm^2")
+# Plotting ionization cross-sections 
+E=np.logspace(1.0,11.0,100)
+
+sigma_ec=ct.func_sigma_ec(E)*1.0e17 # 1.0e-17 cm^2
+sigma_p=ct.func_sigma_p(E)*1.0e17 # 1.0e-17 cm^2
+sigma_e=ct.func_sigma_e(E)*1.0e17 # 1.0e-17 cm^2
+
+fig=plt.figure(figsize=(10, 8))
+ax=plt.subplot(111)
+
+ax.plot(E,sigma_ec,'b--',linewidth=3,label=r'$\sigma_{\rm ec}$')
+ax.plot(E,sigma_e,'g-.',linewidth=3,label=r'$\sigma^{\rm ion}_{\rm e}$')
+ax.plot(E,sigma_p,'r-',linewidth=3,label=r'$\sigma^{\rm ion}_{\rm p}$')
+
+ax.set_xscale('log')
+ax.set_yscale('log')
+ax.legend()
+ax.set_xlabel(r'$E {\rm (eV)}$',fontsize=fs)
+ax.set_ylabel(r'$\sigma {\rm (10^{-17}\,cm^{2})}$',fontsize=fs)
+for label_axd in (ax.get_xticklabels() + ax.get_yticklabels()):
+    label_axd.set_fontsize(fs)
+ax.set_xlim(1.0e1,1.0e11)
+ax.set_ylim(1.0e-3,2.0e2)
+ax.legend(loc='upper right', prop={"size":22})
+ax.grid(linestyle='--')
+
+plt.savefig("fg_ionizaton_cross-section.png")
+
+# Load the data files for secondary ionization provided by the package
+data_p=ct.load_data_file('phi_p.dat')
+data_e=ct.load_data_file('phi_e.dat')
+
+E_data_p, phi_data_p=data_p[:, 0], data_p[:, 1]
+E_data_e, phi_data_e=data_e[:, 0], data_e[:, 1]
+
+# Plotting secondary ionization functions
+fig=plt.figure(figsize=(10, 8))
+ax=plt.subplot(111)
+
+ax.plot(E_data_p,phi_data_p,'r-',linewidth=3,label=r'${\rm Proton}$')
+ax.plot(E_data_e,phi_data_e,'g-.',linewidth=3,label=r'${\rm Electron}$')
+
+ax.set_xscale('log')
+ax.set_yscale('log')
+ax.legend()
+ax.set_xlabel(r'$E {\rm (eV)}$',fontsize=fs)
+ax.set_ylabel(r'$\sigma {\rm (10^{-17}\,cm^{2})}$',fontsize=fs)
+for label_axd in (ax.get_xticklabels() + ax.get_yticklabels()):
+    label_axd.set_fontsize(fs)
+ax.set_xlim(1.0e1,1.0e11)
+ax.set_ylim(1.0e-3,2.0e2)
+ax.legend(loc='upper right', prop={"size":22})
+ax.grid(linestyle='--')
+
+plt.savefig("fg_secondary-ionizaton.png")
 
 # Testing gamma-ray cross-section by plotting the local gamma-ray emissivity
 Tp=np.logspace(8,15,701)
 Eg=Tp
 
-d_sigma_g=ct.func_d_sigma_g(Tp,Eg) # Minh's code
+d_sigma_g=ct.func_d_sigma_g(Tp,Eg) 
 eps_nucl=ct.func_enhancement(Tp) 
 phi_LOC=np.zeros_like(Eg)
 for i in range(len(Eg)):

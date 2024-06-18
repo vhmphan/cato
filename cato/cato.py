@@ -1,5 +1,6 @@
 import numpy as np
 import scipy as sp
+import pkg_resources
 
 mp=938.272e6 # eV
 me=0.510998e6 # eV
@@ -235,6 +236,18 @@ def func_sigma_e(Ee_p):
 	
 	return sigma_e 
 
+
+####################################################################################################################################
+# Function to load data files provided with the package 
+####################################################################################################################################
+
+
+# Function to load data files provided with the package
+def load_data_file(filename):
+    data_path=pkg_resources.resource_filename(__name__, f'data/{filename}')
+    data=np.loadtxt(data_path)
+    return data
+ 
 
 ####################################################################################################################################
 # Cosmic-ray spectra in the local ISM

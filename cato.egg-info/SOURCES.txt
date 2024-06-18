@@ -8,3 +8,5 @@ cato.egg-info/SOURCES.txt
 cato.egg-info/dependency_links.txt
 cato.egg-info/requires.txt
 cato.egg-info/top_level.txt
+cato/data/phi_e.dat
+cato/data/phi_p.dat

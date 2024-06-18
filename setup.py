@@ -8,6 +8,10 @@ setup(
         'numpy',
         'scipy'
     ],
+    package_data={
+        'cato': ['data/*.dat'],
+    },
+    include_package_data=True,
     description='A package containing a function to cosmic-ray ionization and gamma-ray cross-sections',
     author='Vo Hong Minh Phan',
     author_email='vhmphan@obspm.fr',
