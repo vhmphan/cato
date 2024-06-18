@@ -19,13 +19,11 @@ A package containing a function for ionization cross-sections.
     import matplotlib.pyplot as plt
     import cato.cato as ct
 
-
     # Testing electron capture cross-section
     Ep_p = 1000 # eV 
     sigma_ec_value = ct.func_sigma_ec(Ep_p) # cm^2
 
     print(f"The electron capture cross-section for Ep_p = {Ep_p} eV is {sigma_ec_value} cm^2")
-
 
     # Testing gamma-ray cross-section by plotting the local gamma-ray emissivity
     Tp=np.logspace(8,15,701)
