@@ -13,7 +13,7 @@ A package containing a function for ionization cross-sections.
     ```
 
 **Example code**: Here is an example for using the ionization cross section and gamma-ray cross section
-    ```python
+    ```
     import numpy as np
     from scipy.integrate import trapezoid
     import matplotlib.pyplot as plt
@@ -54,4 +54,4 @@ A package containing a function for ionization cross-sections.
     ax.grid(linestyle='--')
 
     plt.savefig("fg_LocISM_emissivity.png")
-
+    ```
