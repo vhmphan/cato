@@ -9,7 +9,7 @@ A package containing a function for ionization cross-sections.
 
 **Installation**: You can also upgrade this package as follows
     ```
-    pip3 install git+https://github.com/vhmphan/cato.git
+    pip3 install --upgrade git+https://github.com/vhmphan/cato.git
     ```
 
 **Example code**: Here is an example for using the ionization cross section and gamma-ray cross section
