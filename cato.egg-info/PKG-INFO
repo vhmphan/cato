@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: cato
-Version: 0.4
+Version: 0.4.1
 Summary: A package containing a function to cosmic-ray ionization and gamma-ray cross-sections
 Home-page: https://github.com/vhmphan/cato
 Author: Vo Hong Minh Phan

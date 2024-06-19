@@ -611,4 +611,3 @@ def func_fEtd(Urad, Trad, sigma, Ebg):
 
     return fEtd # eV^-1 cm^-3
 
-

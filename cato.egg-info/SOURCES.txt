@@ -3,6 +3,7 @@ README.md
 setup.py
 cato/__init__.py
 cato/cato.py
+cato/cato_class.py
 cato.egg-info/PKG-INFO
 cato.egg-info/SOURCES.txt
 cato.egg-info/dependency_links.txt
