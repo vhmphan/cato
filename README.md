@@ -23,9 +23,10 @@ import cato.cato as ct
 # Plotting ionization cross-sections 
 E=np.logspace(1.0,11.0,100)
 
-sigma_ec=ct.func_sigma_ec(E)*1.0e17 # 1.0e-17 cm^2
-sigma_p=ct.func_sigma_p(E)*1.0e17 # 1.0e-17 cm^2
-sigma_e=ct.func_sigma_e(E)*1.0e17 # 1.0e-17 cm^2
+IonXS = ct.Cross_Section_Ion(E,Es)
+sigma_ec=IonXS.func_sigma_ec()*1.0e17 # 1.0e-17 cm^2
+sigma_p=IonXS.func_sigma_p()*1.0e17 # 1.0e-17 cm^2
+sigma_e=IonXS.func_sigma_e()*1.0e17 # 1.0e-17 cm^2
 
 fig=plt.figure(figsize=(10, 8))
 ax=plt.subplot(111)
@@ -79,8 +80,10 @@ plt.savefig("fg_secondary-ionizaton.png")
 Tp=np.logspace(8,15,701)
 Eg=Tp
 
-d_sigma_g=ct.func_d_sigma_g(Tp,Eg) 
-eps_nucl=ct.func_enhancement(Tp) 
+RadXS=ct.Cross_Section_Rad(Tp,Eg)
+d_sigma_g=RadXS.func_d_sigma_g()
+eps_nucl=RadXS.func_enhancement()
+
 phi_LOC=np.zeros_like(Eg)
 for i in range(len(Eg)):
     phi_LOC[i]=trapezoid(eps_nucl*ct.func_jLocISM_p(Tp)*d_sigma_g[:,i],Tp) # eV^-1 s^-1

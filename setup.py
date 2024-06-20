@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='cato',
-    version='0.4.1',
+    version='0.4.2',
     packages=find_packages(),
     install_requires=[
         'numpy',
@@ -23,3 +23,6 @@ setup(
     ],
     python_requires='>=3.6',
 )
+
+# Setup the package everytime updating using the following command in the main cato directory
+# python3 setup.py sdist bdist_wheel
